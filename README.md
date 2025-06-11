@@ -118,14 +118,45 @@ BM算法是寻找最短线性递推式的"王牌武器"。它巧妙、高效，�
 
 ### 💻 Windows 用户
 
-1. **评测求解线性递推式算法**:
+#### 手动编译和运行 (推荐方式)
+
+1. **编译所有算法实现**:
    ```cmd
-   test1.bat
+   g++ -std=c++11 -O2 berlekamp_massey.cpp -o berlekamp_massey_exec
+   g++ -std=c++11 -O2 gaussian_elimination.cpp -o gaussian_elimination_exec
+   g++ -std=c++11 -O2 matrix_power.cpp -o matrix_power_exec
+   g++ -std=c++11 -O2 poly_multiply.cpp -o poly_multiply_exec
+   g++ -std=c++11 -O2 naive.cpp -o naive_exec
    ```
 
-2. **评测计算第m项的算法**:
+2. **运行单个测试用例**:
    ```cmd
-   test2.bat
+   REM BM算法测试
+   berlekamp_massey_exec < in\1.in > result1.out
+   
+   REM 高斯消元测试
+   gaussian_elimination_exec < in\1.in > result2.out
+   
+   REM 比较结果
+   fc result1.out out\test1.out
+   fc result2.out out\test1.out
+   ```
+
+3. **比较两种方法**:
+   - 分别运行BM算法和高斯消元法
+   - 比较它们的输出结果和运行时间
+   - 对于大规模数据，BM算法通常更快
+
+4. **评测求解第m项的算法** (手动依次测试各种方法):
+   ```cmd
+   REM 对同一输入测试不同方法
+   berlekamp_massey_exec < in\test2.in > bm_result.out
+   matrix_power_exec < in\test2.in > matrix_result.out
+   poly_multiply_exec < in\test2.in > poly_result.out
+   naive_exec < in\test2.in > naive_result.out
+   
+   REM 比较结果
+   fc bm_result.out out\test2.out
    ```
 
 ## 📝 输入/输出格式
